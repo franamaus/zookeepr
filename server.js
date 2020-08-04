@@ -9,6 +9,8 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
+// middleware setup that instructs the server to make certain files readily available, i.e. make files that index.html requires available
+app.use(express.static('public'));
 
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
@@ -82,6 +84,7 @@ function createNewAnimal(body, animalsArray) {
     return animal;
 }
 
+// gets json data of animals searched using query
 app.get('/api/animals', (req, res) => {
     //res.send('Hello!');
     let results = animals;
@@ -92,6 +95,7 @@ app.get('/api/animals', (req, res) => {
     res.json(results); // check http://localhost:3001/api/animals to see object
 })
 
+// gets json data of animals searched using params (which takes ids)
 app.get('/api/animals/:id', (req, res) => {
     const result = findById(req.params.id, animals);
     if (result) {
@@ -101,6 +105,7 @@ app.get('/api/animals/:id', (req, res) => {
     }
 });
 
+// add data to /api/animals when the client requests server to take in new info
 app.post('/api/animals', (req, res) => {
     // set id based on what the next index of the array will be
     req.body.id = animals.length.toString();
@@ -114,6 +119,21 @@ app.post('/api/animals', (req, res) => {
     res.json(req.body);
     }
 })
+
+// gets the index.html file
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+// gets animals.html file for <url>/animals fetch
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+// gets zookeepers.html file for <url>/zookeepers fetch
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);

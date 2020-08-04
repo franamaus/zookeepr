@@ -126,6 +126,26 @@
         "hungry"
       ],
       "id": "12"
+    },
+    {
+      "name": "Jolie",
+      "species": "Meerkat",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "hungry",
+        "anxious"
+      ],
+      "id": "13"
+    },
+    {
+      "name": "Herbert",
+      "species": "Whale",
+      "diet": "omnivore",
+      "personalityTraits": [
+        "hungry",
+        "loving"
+      ],
+      "id": "14"
     }
   ]
 }
